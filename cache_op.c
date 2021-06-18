@@ -69,6 +69,42 @@ int LRU_miss(Cache *cache, int setIndex, Params *params)
     return min_pos;
 }
 
+int p_LRU_miss(Cache *cache, int setIndex, Params *params)
+{
+    params->misses++;
+    int pos = -1;
+    int cntr = 0;
+    int i;
+    for (i = 0; i < params->E; i++)
+    {
+        if(cache->lines[setIndex][i].LRU_cntr == 0)
+        {
+            pos = i;
+            cntr++;
+        }
+    }
+    if(cntr == 1)//all 1 LRU case incoming
+    {
+        for (i = 0; i < params->E; i++)
+        {
+            cache->lines[setIndex][i].LRU_cntr = 0;
+        }
+        cache->lines[setIndex][pos].LRU_cntr = 1;
+        if(cache->lines[setIndex][pos].valid == 1)
+        {
+            params->evictions++;
+        }
+        return pos;
+    }
+
+    cache->lines[setIndex][pos].LRU_cntr = 1;
+    if(cache->lines[setIndex][pos].valid == 1)
+    {
+        params->evictions++;
+    }
+    return pos;
+}
+
 void LRU_hit(Cache *cache, int setIndex, int lineIndex, Params *params)
 {
     params->hits++;
@@ -81,6 +117,33 @@ void LRU_hit(Cache *cache, int setIndex, int lineIndex, Params *params)
         }
     }
     cache->lines[setIndex][lineIndex].LRU_cntr = params->E;
+}
+
+void p_LRU_hit(Cache *cache, int setIndex, int lineIndex, Params *params)
+{
+    params->hits++;
+    int i;
+    int cntr = 0;
+    for (i = 0; i < params->E; i++)
+    {
+        if(cache->lines[setIndex][i].LRU_cntr == 0)
+        {
+            cntr++;
+        }
+    }
+    if(cntr == 1)
+    {
+        for (i = 0; i < params->E; i++)
+        {
+            cache->lines[setIndex][i].LRU_cntr = 0;
+        }
+        cache->lines[setIndex][lineIndex].LRU_cntr = 1;
+    }
+    else
+    {
+        cache->lines[setIndex][lineIndex].LRU_cntr = 1;
+    }
+    
 }
 
 hme runCache(Cache *cache, Params *params, address addr)
@@ -102,7 +165,9 @@ hme runCache(Cache *cache, Params *params, address addr)
             case 'l':
                 LRU_hit(cache, setIndex, i, params);
                 break;
-
+            case 'p':
+                p_LRU_hit(cache, setIndex, i, params);
+                break;
             default:
                 LRU_hit(cache, setIndex, i, params);
                 break;
@@ -121,7 +186,9 @@ hme runCache(Cache *cache, Params *params, address addr)
     case 'l':
         miss_pos = LRU_miss(cache, setIndex, params);
         break;
-
+    case 'p':
+        miss_pos = p_LRU_miss(cache, setIndex, params);
+        break;
     default:
         miss_pos = LRU_miss(cache, setIndex, params);
         break;

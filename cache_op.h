@@ -26,4 +26,8 @@ int LRU_miss(Cache *cache, int setIndex, Params *params);
 
 void LRU_hit(Cache *cache, int setIndex, int lineIndex, Params *params);
 
+int p_LRU_miss(Cache *cache, int setIndex, Params *params);
+
+void p_LRU_hit(Cache *cache, int setIndex, int lineIndex, Params *params);
+
 #endif
