@@ -16,6 +16,10 @@
 
     1) Least Recently Used (LRU)
     2) Pseudo Least Recently Used (PLRU)
+
+## Trace Files
+    1) trace/ contains all the trace files used to test the simulator
+    2) trace files generated using valgrind(lackey)
    
 ## To Do
     1) Add more eviction policies
