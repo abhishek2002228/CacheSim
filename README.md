@@ -23,3 +23,11 @@
    
 ## To Do
     1) Add more eviction policies
+   
+## Output
+    The simulator outputs include:
+    1. Number of reads
+    2. Number of writes
+    3. Number of cache hits
+    4. Number of cache misses
+    5. Number of cache evictions 
