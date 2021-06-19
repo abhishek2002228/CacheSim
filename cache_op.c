@@ -5,7 +5,7 @@
 Cache *buildCache(size_m E, size_c S, size_c B)
 {
     Cache *cache = (Cache *)malloc(sizeof(Cache));
-    cache->lines = (Line **)malloc(sizeof(Cache *) * S);
+    cache->lines = (Line **)malloc(sizeof(Line *) * S);
 
     int setIndex;
     for (setIndex = 0; setIndex < S; setIndex++)
@@ -72,6 +72,15 @@ int LRU_miss(Cache *cache, int setIndex, Params *params)
 int p_LRU_miss(Cache *cache, int setIndex, Params *params)
 {
     params->misses++;
+    if(params->E == 1)
+    {
+        cache->lines[setIndex][0].LRU_cntr = 1;
+        if(cache->lines[setIndex][0].valid == 1)
+        {
+            params->evictions++;
+        }
+        return 0;
+    }
     int pos = -1;
     int cntr = 0;
     int i;
