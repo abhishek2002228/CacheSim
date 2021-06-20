@@ -1,5 +1,7 @@
 # CacheSim
 
+`**This simulator does not support misaligned cache accesses**`
+
 ## Files
     1. Makefile : Builds the simulator
     2. helper_func.h : Printing stats
@@ -23,6 +25,7 @@
    
 ## To Do
     1) Add more eviction policies
+    2) Add support for misaligned cache accesses 
    
 ## Output
     The simulator outputs include:
