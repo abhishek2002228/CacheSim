@@ -11,7 +11,7 @@
 
 ## Usage
     1. make
-    2. ./csim [-verbosity] -s <set_bits> -E <associativity> -b <block_bits> -p <char> -trace <file>
+    2. ./csim [-verbosity] -s <set_bits> -E <associativity> -b <block_bits> -p <eviction_policy> -t <trace_file>
     3. make clean
 
 ## Eviction Policies Supported

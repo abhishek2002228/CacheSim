@@ -15,7 +15,7 @@ void printAccess(int reads, int writes)
 
 void printUsage(char* argv[])
 {
-    printf("Usage: %s [-verbosity] -s <num> -E <num> -b <num> -p <char> -trace <file>\n", argv[0]);
+    printf("Usage: %s [-verbosity] -s <num> -E <num> -b <num> -p <char> -t <file>\n", argv[0]);
     printf("Options:\n");
     printf("  -h         Print this help message.\n");
     printf("  -v         Optional verbose flag.\n");
